@@ -36,7 +36,14 @@ class UserController {
         password: req.body.password,
       }
       const response = await UserModel.create(user)
-      const resBody = customeResBody(response, 'User created successfully', 201)
+      // Specific user data
+      const { _id, name, email, role } = response
+
+      const resBody = customeResBody(
+        { _id, name, email, role },
+        'User created successfully',
+        201,
+      )
       res.status(resBody.status_code).json(resBody)
     } catch (error) {
       next(error)
